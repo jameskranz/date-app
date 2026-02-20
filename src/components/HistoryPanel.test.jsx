@@ -38,4 +38,15 @@ describe('HistoryPanel', () => {
     expect(screen.getByText('Pizza')).toBeInTheDocument()
     expect(screen.getByText(/Dinner/i)).toBeInTheDocument()
   })
+
+  it('should handle games with missing winners property gracefully', async () => {
+    const mockGames = [{ id: '1', createdAt: '2026-02-20T12:00:00Z' }]
+    adapterMock.list.mockResolvedValue(mockGames)
+
+    await act(async () => {
+      render(<HistoryPanel adapter={adapterMock} />)
+    })
+
+    expect(screen.getByText('History')).toBeInTheDocument()
+  })
 })

@@ -85,4 +85,18 @@ describe('Board', () => {
     render(<Board />)
     expect(screen.getByText('Play Again')).toBeInTheDocument()
   })
+
+  it('should handle missing currentGame gracefully', () => {
+    vi.mocked(useGameStore).mockImplementation((selector) => selector({
+      currentGame: undefined,
+    }))
+    expect(() => render(<Board />)).not.toThrow()
+  })
+
+  it('should handle missing categories gracefully', () => {
+    vi.mocked(useGameStore).mockImplementation((selector) => selector({
+      currentGame: { categories: undefined },
+    }))
+    expect(() => render(<Board />)).not.toThrow()
+  })
 })

@@ -104,4 +104,17 @@ describe('Category', () => {
     const sushiWrapper = screen.getByText('Sushi').parentElement
     expect(sushiWrapper).toHaveClass('winner-glow')
   })
+
+  it('should handle missing items property gracefully', () => {
+    const incompleteCategory = { name: 'Test', items: undefined }
+    expect(() => render(
+      <Category 
+        category={incompleteCategory} 
+        catIndex={0} 
+        allItems={[]} 
+        eliminated={[]} 
+        phase="setup" 
+      />
+    )).not.toThrow()
+  })
 })

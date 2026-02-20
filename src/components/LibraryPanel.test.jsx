@@ -82,4 +82,17 @@ describe('LibraryPanel', () => {
     
     expect(onSelectItem).toHaveBeenCalledWith('Dinner', 'Pizza')
   })
+
+  it('should handle missing items in store gracefully', () => {
+    vi.mocked(useLibraryStore).mockImplementation((selector) => selector({
+      items: undefined,
+      initialized: true,
+      initialize: mockInitialize,
+      addItem: mockAddItem,
+      removeItem: mockRemoveItem,
+      getCategory: mockGetCategory,
+    }))
+    
+    expect(() => render(<LibraryPanel categories={[]} onSelectItem={onSelectItem} />)).not.toThrow()
+  })
 })
