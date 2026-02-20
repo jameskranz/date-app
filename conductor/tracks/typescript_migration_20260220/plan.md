@@ -1,14 +1,14 @@
 # Implementation Plan - Migrate to TypeScript
 
-## Phase 1: Environment Setup
+## Phase 1: Environment Setup [checkpoint: 3895cd0]
 - [x] Task: Initialize TypeScript configuration. [b423700]
     - [x] Run `npx tsc --init`.
     - [x] Configure `tsconfig.json` for React/Vite/Vitest.
     - [x] Install `@types/react`, `@types/react-dom`, `@types/uuid`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Environment Setup' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Environment Setup' (Protocol in workflow.md)
 
 ## Phase 2: Core Logic Migration (Data & Storage)
-- [ ] Task: Create global type definitions (e.g., `src/types/index.ts`).
+- [~] Task: Create global type definitions (e.g., `src/types/index.ts`).
 - [ ] Task: Convert storage adapters to TypeScript.
     - [ ] `LocalLibraryAdapter.ts`
     - [ ] `LocalGameAdapter.ts`
