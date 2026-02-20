@@ -4,9 +4,11 @@
 - **React (v19):** Modern component-based architecture with powerful state management.
 - **Vite (v8 beta):** Fast dev server and build tool with hot module replacement (HMR).
 
-## Language & Linting
+## Tooling & Quality
 - **JavaScript (JSX):** Dynamic, widely supported language with modern syntax.
 - **ESLint:** Enforces code quality and consistent styling.
+- **Vitest:** Unit and component testing framework for fast, reliable feedback loops.
+- **Code Coverage:** Mandatory >80% statement and branch coverage enforced via @vitest/coverage-v8.
 
 ## State Management & Storage
 - **Zustand (v5):** Lightweight, scalable state management for game board and library data.
