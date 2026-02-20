@@ -1,8 +1,0 @@
-{
-  "track_id": "typescript_migration_20260220",
-  "type": "quality",
-  "status": "new",
-  "created_at": "2026-02-20T13:43:00Z",
-  "updated_at": "2026-02-20T13:43:00Z",
-  "description": "Migrate to TypeScript"
-}

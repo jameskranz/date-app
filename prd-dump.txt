@@ -1,0 +1,97 @@
+Product Requirements Document (PRD)
+Project Name: DATE (Working Title)
+Version: 0.2   |   Status: Draft   |   Date: February 2026
+1. Executive Summary
+DATE (Dinner, Activity, Treat, Entertainment) is a web application that digitizes the classic childhood fortune-telling game MASH to help couples and friend groups make decisions on meals, activities, and entertainment. The name is an acronym mirroring MASH's original spirit — each letter represents one of the four default categories. The app combines a nostalgic, gamified interface with practical decision-making tools including libraries of ideas, group voting, history tracking, and time-aware recommendations.
+2. Target Users
+MVP Persona: The Couple
+Two people, same location, one device, planning a casual evening or day together. Primary frustration: the endless back-and-forth of "what do you want to do?" DATE solves this in a playful, low-stakes way that feels fun rather than like a planning chore.
+Age: Millennials / Gen Z
+Tech comfort: Casual users — the app must be immediately intuitive
+Tone expectation: Nostalgic, playful, low-effort
+Phase 2+ Persona: The Friend Group
+3–6 people planning a group outing, potentially across multiple devices. The jump from couples to friend groups is primarily a technical one (real-time sync, multi-participant input) rather than a conceptual redesign.
+3. Core Terminology
+The Board: The active game screen containing the categories (default 4) with ~4 options each.
+The Library: A persistent database of ideas users can pull from to populate The Board.
+The Magic Number: The integer used to count through and eliminate items.
+The Result: The final surviving item in each category.
+4. Product Sequencing (Phased Approach)
+Phase 1: The "Date Night MVP" (Local Only)
+Goal: A functional single-page app (SPA) for two people sharing one screen. No login required.
+Data: Stored in localStorage.
+Scope: User manually types in options for the 4 fixed categories, sets time context, presses "DATE", and watches the elimination animation.
+Phase 2: The Connected Group (Backend V1)
+Goal: Enable remote usage, persistent identities, and basic history.
+Features: Google Auth, Group Creation (Lobby), Real-time state sync, Group Libraries, Game Logs, and LLM-inferred time estimates.
+Phase 3: The Decision Engine & Customization
+Goal: Optimize how ideas get from the Library to the Board using data.
+Features: Voting/Ranked Choice, Custom Categories, Advanced Item Statistics, and Smart Time Filtering.
+5. Functional Requirements (By Phase)
+Phase 1: The MVP (Local)
+5.1 Categories
+The app loads with 4 default categories: Dinner, Activity, Treat, Entertainment.
+5.2 The Board Setup & Gameplay
+Each category has 4 input slots. Game requires all slots filled to start.
+Spiral Mechanic: User press-and-hold generates a Magic Number (3–15).
+Elimination: System counts and crosses out items until 1 remains per category.
+Phase 2: User Accounts, Groups & Logs
+5.3 Authentication & Groups
+Google OAuth login.
+Users can create Groups and invite others via link.
+Real-time sync of inputs across devices.
+5.4 Libraries
+Personal & Group Libraries: Users can save items.
+Users can copy items from Personal to Group libraries.
+5.5 Game History (The Log)
+Group History: A chronological list of past games played by this group. Displays: Date, Participants, the 4 Winning Results, and declared time context.
+Personal History: A private log of all games the user has participated in across all groups.
+Phase 3: Advanced Selection, Stats & Customization
+5.6 Advanced Item Statistics
+Track two counters for every unique Library item:
+Times Played: How often this item appeared on a Board.
+Times Won: How often this item survived as the final result.
+UI Indicator: When a user selects an item from the Library, display stats and time estimate together — e.g., "Sushi: Played 12x, Won 3x · ~1 hour".
+5.7 Custom Categories
+Edit Headers: Users can rename category titles (e.g., change "Treat" to "Cocktail").
+Dynamic Columns: Support for 5+ categories.
+Library Logic: New custom categories create new tags in the Group Library.
+5.8 The Draft Phase
+Group members vote on Library items before the Board is populated. The system can sort items by Least Recently Won to encourage variety, and filter by available time (see Section 6).
+6. Time-Awareness
+Overview
+A DATE result is only useful if it's achievable within the time a couple actually has. This feature introduces time as a soft constraint — informing recommendations and flagging conflicts without overriding user choice. Couples may open DATE spontaneously in the evening or plan ahead earlier in the week; the feature is designed to serve both contexts equally.
+Phase 1: Time Context Input
+Before the board is populated, users are prompted to provide two inputs:
+Start time: When the date is expected to begin (time picker, defaults to current time).
+Available duration: A simple selector — ~2 hours, Half day, Full day.
+In Phase 1, this context is collected to orient users toward realistic choices. It is stored and used in Phase 2+ for filtering and warnings.
+Phase 2: LLM-Inferred Time Estimates
+When a user adds an item to their Library, the system automatically infers a time estimate using an LLM (e.g., "Hiking" → 2–4 hours, "Boba run" → 30 min). No manual input is required.
+Override: Users may edit the estimated time range from the Library view only. Estimates are not editable during active gameplay.
+Display: Time estimates are shown alongside item stats in the Library selection UI.
+Phase 3: Smart Filtering & Combo Flagging
+Conflict flag: If the winning combo's estimated total exceeds the available duration, DATE surfaces a non-blocking warning after the result is revealed (e.g., "Heads up — this combo might take longer than you have. Want to re-roll a category?").
+No forced action: The user retains full control. The flag is informational only.
+Draft filtering: In the Draft/voting phase, items can optionally be filtered or sorted by time estimate relative to the declared duration.
+Open Questions
+Should time context (start time + duration) be saved per session in the Game Log for historical reference?
+How should the LLM handle ambiguous items like "Board games" where duration varies widely?
+7. UI/UX Guidelines
+Aesthetic: Handwritten fonts, notebook paper background.
+Mobile First: Large, thumb-friendly inputs.
+History View: A clear, scrollable timeline card view for past games. Optional "Re-roll this date" button to load a previous winning combo back onto the board.
+8. Technical Considerations
+Frontend: React or Vue.js.
+Backend: Firebase or Supabase.
+LLM Integration (Phase 2): A lightweight inference call on Library item save events to infer time estimates. Does not power core gameplay.
+Data Model
+Game Log:
+{ "game_id": "g_999", "group_id": "grp_1", "timestamp": "...", "time_context": { "start_time": "18:00", "duration": "2 hours" }, "winning_results": [ { "category": "Dinner", "item": "Sushi" }, { "category": "Activity", "item": "Mini Golf" } ] }
+Library Item (with Stats & Time):
+{ "item_id": "it_55", "name": "Sushi", "category_tag": "Dinner", "time_estimate": { "min_minutes": 45, "max_minutes": 90, "user_override": false }, "group_stats": { "grp_1": { "times_played": 10, "times_won": 2 } }, "personal_stats": { "user_A": { "times_played": 15, "times_won": 4 } } }
+9. Open Questions
+Duplicate Data: If one user spells it "Sushi" and another "Sushi Place", does the system recognize them as the same item? (Phase 3 solution: basic string normalization or manual merge tools.)
+Privacy: Personal stats are private to the user; Group stats are visible to all group members.
+Re-roll button: Should "Re-roll this date" (History View) be a Phase 2 feature or Phase 3?
+Spiral Mechanic: How exactly does hold duration map to the Magic Number? Is it random within 3–15 or tied to hold length?

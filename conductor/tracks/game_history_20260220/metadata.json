@@ -1,8 +1,0 @@
-{
-  "track_id": "game_history_20260220",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-02-20T10:31:00Z",
-  "updated_at": "2026-02-20T10:31:00Z",
-  "description": "Implement Game History persistence"
-}
