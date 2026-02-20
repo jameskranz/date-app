@@ -8,8 +8,8 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Environment Setup' (Protocol in workflow.md)
 
 ## Phase 2: Core Logic Migration (Data & Storage)
-- [~] Task: Create global type definitions (e.g., `src/types/index.ts`).
-- [ ] Task: Convert storage adapters to TypeScript.
+- [x] Task: Create global type definitions (e.g., `src/types/index.ts`).
+- [~] Task: Convert storage adapters to TypeScript.
     - [ ] `LocalLibraryAdapter.ts`
     - [ ] `LocalGameAdapter.ts`
 - [ ] Task: Convert Zustand stores to TypeScript.
