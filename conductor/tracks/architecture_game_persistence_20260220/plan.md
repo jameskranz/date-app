@@ -1,16 +1,16 @@
 # Implementation Plan - Architecture: Unify Game Persistence
 
-## Phase 1: Data Layer & Repository
+## Phase 1: Data Layer & Repository [checkpoint: 0268ac4]
 - [x] Task: Create `LocalGameAdapter` (GameRepository). [c9c8229]
     - [x] Define `Game` type/schema (in JSDoc or separate type file).
     - [x] Implement `save(game)`: Upsert game.
     - [x] Implement `get(id)`: Retrieve by ID.
     - [x] Implement `list(filter)`: Retrieve all (with optional status filter).
     - [x] **Verification:** TDD with >80% coverage.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Data Layer & Repository' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Data Layer & Repository' (Protocol in workflow.md)
 
 ## Phase 2: Store Refactor
-- [ ] Task: Refactor `gameStore` to use `LocalGameAdapter`.
+- [~] Task: Refactor `gameStore` to use `LocalGameAdapter`.
     - [ ] Inject adapter via factory (like `libraryStore`).
     - [ ] Replace transient state with `currentGame` object.
     - [ ] Implement `createGame()` action.
