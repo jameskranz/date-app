@@ -1,12 +1,12 @@
 # Implementation Plan - Architecture: Unify Game Persistence
 
 ## Phase 1: Data Layer & Repository
-- [ ] Task: Create `LocalGameAdapter` (GameRepository).
-    - [ ] Define `Game` type/schema (in JSDoc or separate type file).
-    - [ ] Implement `save(game)`: Upsert game.
-    - [ ] Implement `get(id)`: Retrieve by ID.
-    - [ ] Implement `list(filter)`: Retrieve all (with optional status filter).
-    - [ ] **Verification:** TDD with >80% coverage.
+- [x] Task: Create `LocalGameAdapter` (GameRepository). [c9c8229]
+    - [x] Define `Game` type/schema (in JSDoc or separate type file).
+    - [x] Implement `save(game)`: Upsert game.
+    - [x] Implement `get(id)`: Retrieve by ID.
+    - [x] Implement `list(filter)`: Retrieve all (with optional status filter).
+    - [x] **Verification:** TDD with >80% coverage.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Data Layer & Repository' (Protocol in workflow.md)
 
 ## Phase 2: Store Refactor
