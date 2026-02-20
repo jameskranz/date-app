@@ -4,9 +4,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [x] **Track: Quality: Migrate to TypeScript**
-  *Link: [./tracks/typescript_migration_20260220/](./tracks/typescript_migration_20260220/)*
-
 - [ ] **Track: Maintainability: Modularize Component Styling**
   *Link: [./tracks/modular_css_20260220/](./tracks/modular_css_20260220/)*
 
