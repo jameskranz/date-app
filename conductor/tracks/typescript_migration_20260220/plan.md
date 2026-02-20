@@ -12,9 +12,9 @@
 - [x] Task: Convert storage adapters to TypeScript. [6f60596]
     - [x] `LocalLibraryAdapter.ts`
     - [x] `LocalGameAdapter.ts`
-- [ ] Task: Convert Zustand stores to TypeScript.
-    - [ ] `libraryStore.ts`
-    - [ ] `gameStore.ts`
+- [x] Task: Convert Zustand stores to TypeScript. [a1f21dc]
+    - [x] `libraryStore.ts`
+    - [x] `gameStore.ts`
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Core Logic Migration' (Protocol in workflow.md)
 
 ## Phase 3: UI Component Migration
