@@ -25,6 +25,6 @@
 - [x] Task: Update `App.jsx` to mount `HistoryPanel`. [952473d]
 - [x] Task: Conductor - User Manual Verification 'Phase 3: UI Integration (History)' (Protocol in workflow.md) [checkpoint: 3c7f819]
 
-## Phase 4: Finalization
-- [~] Task: Full Project Coverage Check (>80%).
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Finalization' (Protocol in workflow.md)
+## Phase 4: Finalization [checkpoint: 194c98d]
+- [x] Task: Full Project Coverage Check (>80%). [194c98d]
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Finalization' (Protocol in workflow.md)
