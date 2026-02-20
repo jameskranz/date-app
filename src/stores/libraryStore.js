@@ -1,10 +1,10 @@
 import { create } from 'zustand'
-import { LocalStorageAdapter } from '../storage/implementations/LocalStorageAdapter'
+import { LocalLibraryAdapter } from '../storage/implementations/LocalLibraryAdapter'
 
 // Swap this import to switch adapter implementations:
 // import { RemoteStorageAdapter } from '../storage/implementations/RemoteStorageAdapter'
 // import { CachedStorageAdapter } from '../storage/implementations/CachedStorageAdapter'
-const adapter = new LocalStorageAdapter()
+const adapter = new LocalLibraryAdapter()
 
 const useLibraryStore = create((set, get) => ({
   // ── State ──────────────────────────────────────────────────────────────
