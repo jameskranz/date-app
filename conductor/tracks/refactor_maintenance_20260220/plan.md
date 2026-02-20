@@ -16,15 +16,15 @@
     - [x] `libraryStore.js`.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Store Tests' (Protocol in workflow.md)
 
-## Phase 3: Component Tests
-- [~] Task: Implement unit tests for key UI components.
-    - [ ] `Board.jsx`.
-    - [ ] `Category.jsx`.
-    - [ ] `LibraryPanel.jsx`.
-    - [ ] `SpiralButton.jsx`.
-    - [ ] `DevTools.jsx`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Component Tests' (Protocol in workflow.md)
+## Phase 3: Component Tests [checkpoint: ce0b258]
+- [x] Task: Implement unit tests for key UI components. [e2bfa00]
+    - [x] `Board.jsx`.
+    - [x] `Category.jsx`.
+    - [x] `LibraryPanel.jsx`.
+    - [x] `SpiralButton.jsx`.
+    - [x] `DevTools.jsx`.
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Component Tests' (Protocol in workflow.md)
 
 ## Phase 4: Final Verification
-- [ ] Task: Run full project coverage report and verify >80% coverage.
+- [~] Task: Run full project coverage report and verify >80% coverage.
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Final Verification' (Protocol in workflow.md)
