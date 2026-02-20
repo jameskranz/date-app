@@ -5,10 +5,10 @@
 - **Vite (v8 beta):** Fast dev server and build tool with hot module replacement (HMR).
 
 ## Tooling & Quality
-- **JavaScript (JSX):** Dynamic, widely supported language with modern syntax.
+- **TypeScript (TSX):** Strictly typed superset of JavaScript for enhanced reliability and developer experience.
 - **ESLint:** Enforces code quality and consistent styling.
 - **Vitest:** Unit and component testing framework for fast, reliable feedback loops.
-- **Code Coverage:** Mandatory >80% statement and branch coverage enforced via @vitest/coverage-v8.
+- **Code Quality:** Mandatory TypeScript strict mode and >80% code coverage enforced via @vitest/coverage-v8.
 
 ## State Management & Storage
 - **Zustand (v5):** Lightweight, scalable state management for game board and library data.
