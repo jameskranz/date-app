@@ -1,10 +1,10 @@
 # Implementation Plan - Migrate to TypeScript
 
 ## Phase 1: Environment Setup
-- [ ] Task: Initialize TypeScript configuration.
-    - [ ] Run `npx tsc --init`.
-    - [ ] Configure `tsconfig.json` for React/Vite/Vitest.
-    - [ ] Install `@types/react`, `@types/react-dom`, `@types/uuid`.
+- [x] Task: Initialize TypeScript configuration. [b423700]
+    - [x] Run `npx tsc --init`.
+    - [x] Configure `tsconfig.json` for React/Vite/Vitest.
+    - [x] Install `@types/react`, `@types/react-dom`, `@types/uuid`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Environment Setup' (Protocol in workflow.md)
 
 ## Phase 2: Core Logic Migration (Data & Storage)
