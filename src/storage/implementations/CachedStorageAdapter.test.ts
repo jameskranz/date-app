@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { CachedStorageAdapter } from './CachedStorageAdapter'
+import { LibraryRepository } from '../../types'
 
 describe('CachedStorageAdapter', () => {
-  const adapter = new CachedStorageAdapter({})
+  const adapter = new CachedStorageAdapter({} as LibraryRepository)
 
   it('getAllItems should throw not implemented', async () => {
     await expect(adapter.getAllItems()).rejects.toThrow('CachedStorageAdapter not yet implemented')

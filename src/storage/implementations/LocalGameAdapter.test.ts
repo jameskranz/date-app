@@ -1,8 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { LocalGameAdapter } from './LocalGameAdapter'
+import { Game, GameStatus } from '../../types'
 
 describe('LocalGameAdapter', () => {
-  let adapter
+  let adapter: LocalGameAdapter
   const STORAGE_KEY = 'date_games'
 
   beforeEach(() => {
@@ -16,9 +17,9 @@ describe('LocalGameAdapter', () => {
   })
 
   it('should save a new game', async () => {
-    const mockGame = {
+    const mockGame: Game = {
       id: 'game-1',
-      status: 'setup',
+      status: 'setup' as GameStatus,
       createdAt: new Date().toISOString(),
       participants: ['user-1'],
       categories: [],
@@ -28,16 +29,23 @@ describe('LocalGameAdapter', () => {
     const saved = await adapter.save(mockGame)
     expect(saved).toEqual(mockGame)
 
-    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
     expect(stored).toHaveLength(1)
     expect(stored[0]).toEqual(mockGame)
   })
 
   it('should update an existing game', async () => {
-    const mockGame = { id: 'game-1', status: 'setup' }
+    const mockGame: Game = {
+      id: 'game-1',
+      status: 'setup' as GameStatus,
+      createdAt: new Date().toISOString(),
+      participants: [],
+      categories: [],
+      winners: []
+    }
     await adapter.save(mockGame)
 
-    const updatedGame = { ...mockGame, status: 'active' }
+    const updatedGame: Game = { ...mockGame, status: 'active' as GameStatus }
     await adapter.save(updatedGame)
 
     const games = await adapter.list()
@@ -46,7 +54,14 @@ describe('LocalGameAdapter', () => {
   })
 
   it('should get a game by id', async () => {
-    const mockGame = { id: 'game-1', name: 'Game 1' }
+    const mockGame: Game = {
+      id: 'game-1',
+      status: 'setup' as GameStatus,
+      createdAt: new Date().toISOString(),
+      participants: [],
+      categories: [],
+      winners: []
+    }
     await adapter.save(mockGame)
 
     const game = await adapter.get('game-1')
@@ -59,9 +74,12 @@ describe('LocalGameAdapter', () => {
   })
 
   it('should list games with status filter', async () => {
-    await adapter.save({ id: '1', status: 'setup' })
-    await adapter.save({ id: '2', status: 'completed' })
-    await adapter.save({ id: '3', status: 'completed' })
+    const createMock = (id: string, status: GameStatus): Game => ({
+        id, status, createdAt: '', participants: [], categories: [], winners: []
+    })
+    await adapter.save(createMock('1', 'setup'))
+    await adapter.save(createMock('2', 'completed'))
+    await adapter.save(createMock('3', 'completed'))
 
     const completed = await adapter.list({ status: 'completed' })
     expect(completed).toHaveLength(2)

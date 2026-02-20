@@ -1,4 +1,3 @@
-import React from 'react'
 import useGameStore, { flattenItems, FlattenedItem } from '../stores/gameStore'
 import Category from './Category'
 import SpiralButton from './SpiralButton'

@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { LocalLibraryAdapter } from './LocalLibraryAdapter'
 
 describe('LocalLibraryAdapter', () => {
-  let adapter
+  let adapter: LocalLibraryAdapter
   const STORAGE_KEY = 'date_library'
 
   beforeEach(() => {
@@ -41,7 +41,7 @@ describe('LocalLibraryAdapter', () => {
     const item = await adapter.addItem('Dinner', 'Pizza')
     const updated = await adapter.updateItem(item.id, { text: 'Sushi' })
     
-    expect(updated.text).toBe('Sushi')
+    expect(updated?.text).toBe('Sushi')
     
     const items = await adapter.getAllItems()
     expect(items[0].text).toBe('Sushi')

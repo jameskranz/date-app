@@ -8,7 +8,7 @@ describe('SpiralButton', () => {
   beforeEach(() => {
     vi.useFakeTimers()
     // Mocking requestAnimationFrame properly for Vitest
-    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => setTimeout(cb, 16))
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => setTimeout(cb, 16) as any)
     vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(id => clearTimeout(id))
   })
 
@@ -25,7 +25,7 @@ describe('SpiralButton', () => {
 
   it('should transition to holding state on mouse down', async () => {
     render(<SpiralButton onMagicNumber={onMagicNumber} />)
-    const wrapper = screen.getByText(/Press and hold/i).parentElement
+    const wrapper = screen.getByText(/Press and hold/i).parentElement!
     
     fireEvent.mouseDown(wrapper)
     
@@ -34,7 +34,7 @@ describe('SpiralButton', () => {
 
   it('should transition back to idle if held for too short', async () => {
     render(<SpiralButton onMagicNumber={onMagicNumber} />)
-    const wrapper = screen.getByText(/Press and hold/i).parentElement
+    const wrapper = screen.getByText(/Press and hold/i).parentElement!
     
     fireEvent.mouseDown(wrapper)
     vi.advanceTimersByTime(100) 
@@ -45,7 +45,7 @@ describe('SpiralButton', () => {
 
   it('should progress to counting and done after long hold', async () => {
     render(<SpiralButton onMagicNumber={onMagicNumber} />)
-    const wrapper = screen.getByText(/Press and hold/i).parentElement
+    const wrapper = screen.getByText(/Press and hold/i).parentElement!
     
     fireEvent.mouseDown(wrapper)
     vi.advanceTimersByTime(2000)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Category } from '../types'
 
 const TEST_DATA: Category[] = [

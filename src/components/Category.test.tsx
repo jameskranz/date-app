@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import Category from './Category'
+import { Category as CategoryType } from '../types'
+import { FlattenedItem } from '../stores/gameStore'
 
 // Mock the store
 vi.mock('../stores/gameStore', () => ({
@@ -11,14 +13,14 @@ import useGameStore from '../stores/gameStore'
 
 describe('Category', () => {
   const mockUpdateItem = vi.fn()
-  const category = {
+  const category: CategoryType = {
     name: 'Dinner',
     items: ['Pizza', 'Sushi', 'Burger', 'Tacos'],
   }
-  const allItems = category.items.map((text, i) => ({ catIndex: 0, itemIndex: i, text }))
+  const allItems: FlattenedItem[] = category.items.map((text, i) => ({ catIndex: 0, itemIndex: i, text }))
 
   beforeEach(() => {
-    vi.mocked(useGameStore).mockImplementation((selector) => selector({
+    vi.mocked(useGameStore).mockImplementation((selector: any) => selector({
       updateItem: mockUpdateItem,
     }))
   })
@@ -37,7 +39,7 @@ describe('Category', () => {
     expect(screen.getByText('Dinner')).toBeInTheDocument()
     const inputs = screen.getAllByRole('textbox')
     expect(inputs).toHaveLength(4)
-    expect(inputs[0].value).toBe('Pizza')
+    expect((inputs[0] as HTMLInputElement).value).toBe('Pizza')
   })
 
   it('should call updateItem on input change', () => {
@@ -78,18 +80,16 @@ describe('Category', () => {
         category={category}
         catIndex={0}
         allItems={allItems}
-        eliminated={[0]} // Pizza is eliminated
+        eliminated={[0]} 
         phase="eliminating"
       />
     )
     
-    // Check for eliminated class
     const pizzaWrapper = screen.getByText('Pizza').parentElement
     expect(pizzaWrapper).toHaveClass('eliminated')
   })
 
   it('should show winner with HandCircle', () => {
-    // Only Sushi (index 1) remains
     const eliminated = [0, 2, 3] 
     render(
       <Category
@@ -106,7 +106,7 @@ describe('Category', () => {
   })
 
   it('should handle missing items property gracefully', () => {
-    const incompleteCategory = { name: 'Test', items: undefined }
+    const incompleteCategory = { name: 'Test', items: undefined as any }
     expect(() => render(
       <Category 
         category={incompleteCategory} 

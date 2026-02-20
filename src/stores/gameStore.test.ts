@@ -1,9 +1,11 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
-import { createGameStore, flattenItems, computeEliminationSteps, DEFAULT_CATEGORIES } from './gameStore'
+import { describe, it, expect, beforeEach, vi, afterEach, Mock } from 'vitest'
+import { createGameStore, flattenItems, computeEliminationSteps, DEFAULT_CATEGORIES, GameStore } from './gameStore'
+import { GameRepository, Category } from '../types'
+import { UseBoundStore, StoreApi } from 'zustand'
 
 describe('gameStore logic', () => {
   it('flattenItems should correctly flatten categories', () => {
-    const categories = [
+    const categories: Category[] = [
       { name: 'A', items: ['1', '2'] },
       { name: 'B', items: ['3', '4'] },
     ]
@@ -23,8 +25,8 @@ describe('gameStore logic', () => {
 })
 
 describe('gameStore actions', () => {
-  let useGameStore
-  let adapterMock
+  let useGameStore: UseBoundStore<StoreApi<GameStore>>
+  let adapterMock: Record<keyof GameRepository, Mock>
 
   beforeEach(() => {
     vi.useFakeTimers()
@@ -33,7 +35,7 @@ describe('gameStore actions', () => {
       get: vi.fn(),
       list: vi.fn(),
     }
-    useGameStore = createGameStore(adapterMock)
+    useGameStore = createGameStore(adapterMock as unknown as GameRepository)
   })
 
   afterEach(() => {
@@ -54,7 +56,7 @@ describe('gameStore actions', () => {
   })
 
   it('should fill categories', () => {
-    const newData = [
+    const newData: Category[] = [
       { name: 'C1', items: ['I1', 'I2', 'I3', 'I4'] },
       { name: 'C2', items: ['I5', 'I6', 'I7', 'I8'] },
       { name: 'C3', items: ['I9', 'I10', 'I11', 'I12'] },
@@ -77,7 +79,6 @@ describe('gameStore actions', () => {
     expect(useGameStore.getState().phase).toBe('eliminating')
     expect(useGameStore.getState().magicNumber).toBe(3)
     
-    // Each step is 400ms. 
     vi.advanceTimersByTime(0)
     expect(useGameStore.getState().eliminated).toHaveLength(1)
     
@@ -87,7 +88,6 @@ describe('gameStore actions', () => {
     vi.advanceTimersByTime(10 * 400)
     expect(useGameStore.getState().eliminated).toHaveLength(12)
     
-    // Final result after 800ms more from the last step
     await act(async () => {
       vi.advanceTimersByTime(800)
     })
@@ -99,7 +99,6 @@ describe('gameStore actions', () => {
   it('should reset state and clear timers', async () => {
     useGameStore.getState().startElimination(3)
     
-    // reset() calls createGame() which is async
     await useGameStore.getState().reset()
     
     const state = useGameStore.getState()
@@ -109,8 +108,7 @@ describe('gameStore actions', () => {
   })
 })
 
-// Helper since we are using @testing-library concepts but in a pure store test
-async function act(cb) {
+async function act(cb: () => void) {
   cb()
   await Promise.resolve()
 }

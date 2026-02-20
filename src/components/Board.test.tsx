@@ -1,11 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import Board from './Board'
+import { Category } from '../types'
 
 // Mock the store
 vi.mock('../stores/gameStore', () => ({
   default: vi.fn(),
-  flattenItems: (categories) => {
+  flattenItems: (categories: Category[]) => {
     if (!categories) return []
     return categories.flatMap((cat, ci) =>
       cat.items?.map((item, ii) => ({ catIndex: ci, itemIndex: ii, text: item })) || []
@@ -16,7 +17,7 @@ vi.mock('../stores/gameStore', () => ({
 import useGameStore from '../stores/gameStore'
 
 describe('Board', () => {
-  const categories = [
+  const categories: Category[] = [
     { name: 'Dinner', items: ['', '', '', ''] },
     { name: 'Activity', items: ['', '', '', ''] },
     { name: 'Treat', items: ['', '', '', ''] },
@@ -24,7 +25,7 @@ describe('Board', () => {
   ]
 
   beforeEach(() => {
-    vi.mocked(useGameStore).mockImplementation((selector) => selector({
+    vi.mocked(useGameStore).mockImplementation((selector: any) => selector({
       currentGame: { categories },
       eliminated: [],
       phase: 'setup',
@@ -41,12 +42,12 @@ describe('Board', () => {
   })
 
   it('should render SpiralButton when ready', () => {
-    const readyCategories = categories.map(cat => ({
+    const readyCategories: Category[] = categories.map(cat => ({
       ...cat,
       items: ['A', 'B', 'C', 'D']
     }))
     
-    vi.mocked(useGameStore).mockImplementation((selector) => selector({
+    vi.mocked(useGameStore).mockImplementation((selector: any) => selector({
       currentGame: { categories: readyCategories },
       eliminated: [],
       phase: 'setup',
@@ -57,12 +58,11 @@ describe('Board', () => {
     }))
 
     render(<Board />)
-    // SpiralButton shows 'Press and hold' in idle state
     expect(screen.getByText(/Press and hold/i)).toBeInTheDocument()
   })
 
   it('should show magic number during elimination', () => {
-    vi.mocked(useGameStore).mockImplementation((selector) => selector({
+    vi.mocked(useGameStore).mockImplementation((selector: any) => selector({
       currentGame: { categories },
       eliminated: [1],
       phase: 'eliminating',
@@ -78,7 +78,7 @@ describe('Board', () => {
   })
 
   it('should show reset button when done', () => {
-    vi.mocked(useGameStore).mockImplementation((selector) => selector({
+    vi.mocked(useGameStore).mockImplementation((selector: any) => selector({
       currentGame: { categories },
       eliminated: [],
       phase: 'result',
@@ -93,14 +93,14 @@ describe('Board', () => {
   })
 
   it('should handle missing currentGame gracefully', () => {
-    vi.mocked(useGameStore).mockImplementation((selector) => selector({
+    vi.mocked(useGameStore).mockImplementation((selector: any) => selector({
       currentGame: undefined,
     }))
     expect(() => render(<Board />)).not.toThrow()
   })
 
   it('should handle missing categories gracefully', () => {
-    vi.mocked(useGameStore).mockImplementation((selector) => selector({
+    vi.mocked(useGameStore).mockImplementation((selector: any) => selector({
       currentGame: { categories: undefined },
     }))
     expect(() => render(<Board />)).not.toThrow()

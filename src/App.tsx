@@ -1,10 +1,10 @@
-import React from 'react'
 import useGameStore from './stores/gameStore'
 import Board from './components/Board'
 import LibraryPanel from './components/LibraryPanel'
 import HistoryPanel from './components/HistoryPanel'
 import DevTools from './components/DevTools'
 import { LocalGameAdapter } from './storage/implementations/LocalGameAdapter'
+import { Category } from './types'
 import './App.css'
 
 const gameAdapter = new LocalGameAdapter()
@@ -17,9 +17,9 @@ export default function App() {
   const updateItem = useGameStore(s => s.updateItem)
 
   function handleSelectLibraryItem(categoryName: string, text: string) {
-    const catIndex = categories.findIndex(c => c.name === categoryName)
+    const catIndex = categories.findIndex((c: Category) => c.name === categoryName)
     if (catIndex === -1) return
-    const emptyIndex = categories[catIndex].items.findIndex(item => item.trim() === '')
+    const emptyIndex = categories[catIndex].items.findIndex((item: string) => item.trim() === '')
     if (emptyIndex === -1) return
     updateItem(catIndex, emptyIndex, text)
   }

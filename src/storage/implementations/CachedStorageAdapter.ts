@@ -1,29 +1,34 @@
 import { LibraryItem, LibraryRepository } from '../../types'
 
 export class CachedStorageAdapter implements LibraryRepository {
-  private remote: LibraryRepository
+  private _remote: LibraryRepository
 
   constructor(remoteAdapter: LibraryRepository) {
-    this.remote = remoteAdapter
+    this._remote = remoteAdapter
+  }
+
+  // Helper to satisfy tsc until implemented
+  protected get remote(): LibraryRepository {
+    return this._remote;
   }
 
   async getAllItems(): Promise<LibraryItem[]> {
     throw new Error('CachedStorageAdapter not yet implemented')
   }
 
-  async getLibrary(category: string): Promise<LibraryItem[]> {
+  async getLibrary(_category: string): Promise<LibraryItem[]> {
     throw new Error('CachedStorageAdapter not yet implemented')
   }
 
-  async addItem(category: string, text: string): Promise<LibraryItem> {
+  async addItem(_category: string, _text: string): Promise<LibraryItem> {
     throw new Error('CachedStorageAdapter not yet implemented')
   }
 
-  async removeItem(id: string): Promise<void> {
+  async removeItem(_id: string): Promise<void> {
     throw new Error('CachedStorageAdapter not yet implemented')
   }
 
-  async updateItem(id: string, changes: Partial<LibraryItem>): Promise<LibraryItem | undefined> {
+  async updateItem(_id: string, _changes: Partial<LibraryItem>): Promise<LibraryItem | undefined> {
     throw new Error('CachedStorageAdapter not yet implemented')
   }
 }

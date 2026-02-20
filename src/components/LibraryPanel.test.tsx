@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, act } from '@testing-library/react'
 import LibraryPanel from './LibraryPanel'
+import { Category } from '../types'
 
 // Mock the store
 vi.mock('../stores/libraryStore', () => ({
@@ -10,7 +11,7 @@ vi.mock('../stores/libraryStore', () => ({
 import useLibraryStore from '../stores/libraryStore'
 
 describe('LibraryPanel', () => {
-  const categories = [{ name: 'Dinner' }, { name: 'Activity' }]
+  const categories: Category[] = [{ name: 'Dinner', items: [] }, { name: 'Activity', items: [] }]
   const onSelectItem = vi.fn()
   const mockInitialize = vi.fn()
   const mockAddItem = vi.fn()
@@ -18,7 +19,7 @@ describe('LibraryPanel', () => {
   const mockGetCategory = vi.fn()
 
   beforeEach(() => {
-    vi.mocked(useLibraryStore).mockImplementation((selector) => selector({
+    vi.mocked(useLibraryStore).mockImplementation((selector: any) => selector({
       items: [],
       initialized: true,
       initialize: mockInitialize,
@@ -56,8 +57,8 @@ describe('LibraryPanel', () => {
   })
 
   it('should remove an item', async () => {
-    mockGetCategory.mockImplementation((cat) => {
-        if (cat === 'Dinner') return [{ id: '1', text: 'Pizza', category: 'Dinner' }]
+    mockGetCategory.mockImplementation((cat: string) => {
+        if (cat === 'Dinner') return [{ id: '1', text: 'Pizza', category: 'Dinner', createdAt: '' }]
         return []
     })
 
@@ -70,8 +71,8 @@ describe('LibraryPanel', () => {
   })
 
   it('should select an item', () => {
-    mockGetCategory.mockImplementation((cat) => {
-        if (cat === 'Dinner') return [{ id: '1', text: 'Pizza', category: 'Dinner' }]
+    mockGetCategory.mockImplementation((cat: string) => {
+        if (cat === 'Dinner') return [{ id: '1', text: 'Pizza', category: 'Dinner', createdAt: '' }]
         return []
     })
 
@@ -84,7 +85,7 @@ describe('LibraryPanel', () => {
   })
 
   it('should handle missing items in store gracefully', () => {
-    vi.mocked(useLibraryStore).mockImplementation((selector) => selector({
+    vi.mocked(useLibraryStore).mockImplementation((selector: any) => selector({
       items: undefined,
       initialized: true,
       initialize: mockInitialize,

@@ -1,4 +1,3 @@
-import React from 'react'
 import useGameStore, { FlattenedItem } from '../stores/gameStore'
 import { Category as CategoryType } from '../types'
 

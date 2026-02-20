@@ -1,9 +1,11 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
-import { createGameStore } from './gameStore'
+import { describe, it, expect, beforeEach, vi, afterEach, Mock } from 'vitest'
+import { createGameStore, GameStore } from './gameStore'
+import { GameRepository, GameStatus } from '../types'
+import { UseBoundStore, StoreApi } from 'zustand'
 
 describe('gameStore persistence', () => {
-  let adapterMock
-  let useGameStore
+  let adapterMock: Record<keyof GameRepository, Mock>
+  let useGameStore: UseBoundStore<StoreApi<GameStore>>
 
   beforeEach(() => {
     vi.useFakeTimers()
@@ -12,7 +14,7 @@ describe('gameStore persistence', () => {
       get: vi.fn(),
       list: vi.fn(),
     }
-    useGameStore = createGameStore(adapterMock)
+    useGameStore = createGameStore(adapterMock as unknown as GameRepository)
   })
 
   afterEach(() => {
@@ -32,31 +34,26 @@ describe('gameStore persistence', () => {
 
   it('should update and save game item', async () => {
     await useGameStore.getState().createGame()
-    const gameId = useGameStore.getState().currentGame.id
     
     useGameStore.getState().updateItem(0, 0, 'Pizza')
     
     expect(useGameStore.getState().currentGame.categories[0].items[0]).toBe('Pizza')
-    // Auto-save on change? PRD doesn't explicitly say but spec says "save significant changes"
-    // For now, let's assume we want to save on update
-    expect(adapterMock.save).toHaveBeenCalledTimes(2) // 1 for create, 1 for update
+    expect(adapterMock.save).toHaveBeenCalledTimes(2) 
   })
 
   it('should finish game and mark as completed', async () => {
     await useGameStore.getState().createGame()
     
-    // Fill items to allow finishing? Logic might check isReady.
-    // For this test, let's just trigger finishGame.
     await useGameStore.getState().finishGame([{ category: 'Dinner', item: 'Pizza' }])
     
     const game = useGameStore.getState().currentGame
-    expect(game.status).toBe('completed')
+    expect(game.status).toBe('completed' as GameStatus)
     expect(game.winners).toHaveLength(1)
     expect(adapterMock.save).toHaveBeenCalled()
   })
 
   it('should load an existing game', async () => {
-    const mockGame = { id: 'old-game', status: 'setup', categories: [] }
+    const mockGame = { id: 'old-game', status: 'setup' as GameStatus, categories: [], winners: [], participants: [], createdAt: '' }
     adapterMock.get.mockResolvedValue(mockGame)
 
     await useGameStore.getState().loadGame('old-game')
