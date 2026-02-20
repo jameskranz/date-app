@@ -10,14 +10,14 @@
     - [x] `RemoteStorageAdapter.js`.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Storage Layer Refactor & Tests' (Protocol in workflow.md)
 
-## Phase 2: Store Tests
-- [~] Task: Implement unit tests for Zustand stores.
-    - [ ] `gameStore.js`.
-    - [ ] `libraryStore.js`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Store Tests' (Protocol in workflow.md)
+## Phase 2: Store Tests [checkpoint: 7a6a3c4]
+- [x] Task: Implement unit tests for Zustand stores. [e433769]
+    - [x] `gameStore.js`.
+    - [x] `libraryStore.js`.
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Store Tests' (Protocol in workflow.md)
 
 ## Phase 3: Component Tests
-- [ ] Task: Implement unit tests for key UI components.
+- [~] Task: Implement unit tests for key UI components.
     - [ ] `Board.jsx`.
     - [ ] `Category.jsx`.
     - [ ] `LibraryPanel.jsx`.
