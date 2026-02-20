@@ -18,13 +18,13 @@
     - [x] **Verification:** Update existing store tests to match new structure.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Store Refactor' (Protocol in workflow.md)
 
-## Phase 3: UI Integration (History)
-- [~] Task: Create `HistoryPanel` using `GameRepository`.
-    - [ ] Fetch completed games from `gameStore` (or adapter directly).
-    - [ ] Render list of past games.
-- [ ] Task: Update `App.jsx` to mount `HistoryPanel`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: UI Integration (History)' (Protocol in workflow.md)
+## Phase 3: UI Integration (History) [checkpoint: 952473d]
+- [x] Task: Create `HistoryPanel` using `GameRepository`. [952473d]
+    - [x] Fetch completed games from `gameStore` (or adapter directly).
+    - [x] Render list of past games.
+- [x] Task: Update `App.jsx` to mount `HistoryPanel`. [952473d]
+- [x] Task: Conductor - User Manual Verification 'Phase 3: UI Integration (History)' (Protocol in workflow.md) [checkpoint: 3c7f819]
 
 ## Phase 4: Finalization
-- [ ] Task: Full Project Coverage Check (>80%).
+- [~] Task: Full Project Coverage Check (>80%).
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Finalization' (Protocol in workflow.md)
