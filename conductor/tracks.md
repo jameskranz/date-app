@@ -4,5 +4,14 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
+- [ ] **Track: Quality: Migrate to TypeScript**
+  *Link: [./tracks/typescript_migration_20260220/](./tracks/typescript_migration_20260220/)*
+
+- [ ] **Track: Maintainability: Modularize Component Styling**
+  *Link: [./tracks/modular_css_20260220/](./tracks/modular_css_20260220/)*
+
+- [x] **Track: Architecture: Unify Game Persistence**
+  *Link: [./tracks/architecture_game_persistence_20260220/](./tracks/architecture_game_persistence_20260220/)*
+
 - [x] **Track: Maintainability: Refactor Storage and Enhance Test Coverage**
   *Link: [./tracks/refactor_maintenance_20260220/](./tracks/refactor_maintenance_20260220/)*
