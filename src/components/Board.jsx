@@ -3,8 +3,8 @@ import Category from './Category'
 import SpiralButton from './SpiralButton'
 
 export default function Board() {
-  const categories = useGameStore(s => s.currentGame.categories)
-const eliminated = useGameStore(s => s.eliminated)
+  const categories = useGameStore(s => s.currentGame?.categories || [])
+const eliminated = useGameStore(s => s.eliminated || [])
 const phase = useGameStore(s => s.phase)
 const magicNumber = useGameStore(s => s.magicNumber)
 const startElimination = useGameStore(s => s.startElimination)
@@ -13,9 +13,9 @@ const reset = useGameStore(s => s.reset)
 
 // Compute these locally from categories instead of calling store functions
 const allItems = categories.flatMap((cat, ci) =>
-  cat.items.map((item, ii) => ({ catIndex: ci, itemIndex: ii, text: item }))
+  cat.items?.map((item, ii) => ({ catIndex: ci, itemIndex: ii, text: item })) || []
 )
-const isReady = categories.every(cat => cat.items.every(item => item.trim() !== ''))
+const isReady = categories.every(cat => cat.items?.every(item => item?.trim() !== ''))
 
   return (
     <div className="board-wrapper">

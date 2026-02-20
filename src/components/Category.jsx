@@ -106,7 +106,7 @@ export default function Category({ category, catIndex, allItems, eliminated, pha
     <div className="category">
       <h2 className="category-name">{category.name}</h2>
       <div className="category-items">
-        {category.items.map((item, ii) => {
+        {category.items?.map((item, ii) => {
           const flatIdx = allItems.findIndex(
             a => a.catIndex === catIndex && a.itemIndex === ii
           )

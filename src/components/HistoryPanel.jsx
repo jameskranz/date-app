@@ -22,11 +22,11 @@ export default function HistoryPanel({ adapter }) {
   return (
     <div className="history-panel">
       <h2 className="history-title">History</h2>
-      {games.length === 0 ? (
+      {games?.length === 0 ? (
         <p className="history-empty">No past games yet</p>
       ) : (
         <div className="history-list">
-          {games.map(game => (
+          {games?.map(game => (
             <div key={game.id} className="history-card">
               <div className="history-card-header">
                 <span className="history-date">
@@ -34,7 +34,7 @@ export default function HistoryPanel({ adapter }) {
                 </span>
               </div>
               <div className="history-winners">
-                {game.winners.map(winner => (
+                {game.winners?.map(winner => (
                   <div key={winner.category} className="history-winner">
                     <span className="history-cat">{winner.category}:</span>
                     <span className="history-item">{winner.item}</span>

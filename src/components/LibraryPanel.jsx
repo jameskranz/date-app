@@ -33,14 +33,14 @@ export default function LibraryPanel({ categories, onSelectItem }) {
       <h2 className="library-title">Library</h2>
       <p className="library-subtitle">Tap an item to add it to the board</p>
       <div className="library-columns">
-        {categories.map(cat => (
+        {categories?.map(cat => (
           <div key={cat.name} className="library-column">
             <h3 className="library-category-name">{cat.name}</h3>
             <div className="library-items">
-              {getCategory(cat.name).length === 0 && (
+              {getCategory(cat.name)?.length === 0 && (
                 <p className="library-empty">No items yet</p>
               )}
-              {getCategory(cat.name).map(item => (
+              {getCategory(cat.name)?.map(item => (
                 <div key={item.id} className="library-item">
                   <button
                     className="library-item-text"
