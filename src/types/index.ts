@@ -25,3 +25,11 @@ export interface LibraryItem {
   text: string;
   createdAt: string;
 }
+
+export interface LibraryRepository {
+  getAllItems(): Promise<LibraryItem[]>;
+  getLibrary(category: string): Promise<LibraryItem[]>;
+  addItem(category: string, text: string): Promise<LibraryItem>;
+  removeItem(id: string): Promise<void>;
+  updateItem(id: string, changes: Partial<LibraryItem>): Promise<LibraryItem | undefined>;
+}
