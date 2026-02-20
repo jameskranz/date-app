@@ -1,4 +1,6 @@
 import { create } from 'zustand'
+import { v4 as uuidv4 } from 'uuid'
+import { LocalGameAdapter } from '../storage/implementations/LocalGameAdapter'
 
 export const DEFAULT_CATEGORIES = [
   { name: 'Dinner', items: ['', '', '', ''] },
@@ -6,6 +8,15 @@ export const DEFAULT_CATEGORIES = [
   { name: 'Treat', items: ['', '', '', ''] },
   { name: 'Entertainment', items: ['', '', '', ''] },
 ]
+
+const createDefaultGame = () => ({
+  id: uuidv4(),
+  status: 'setup',
+  createdAt: new Date().toISOString(),
+  participants: ['local-user'],
+  categories: JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
+  winners: [],
+})
 
 export function flattenItems(categories) {
   return categories.flatMap((cat, ci) =>
@@ -48,37 +59,82 @@ export function computeEliminationSteps(categories, magicNumber) {
   return steps
 }
 
-const useGameStore = create((set, get) => ({
+const defaultAdapter = new LocalGameAdapter()
+
+export const createGameStore = (adapter = defaultAdapter) => create((set, get) => ({
   // ── State ──────────────────────────────────────────────────────────────
-  categories: DEFAULT_CATEGORIES,
+  currentGame: createDefaultGame(),
   phase: 'setup',       // 'setup' | 'spiraling' | 'eliminating' | 'result'
   magicNumber: null,
   eliminated: [],
-  winners: [],
   animationTimers: [],
   done: false,
 
   // ── Actions ────────────────────────────────────────────────────────────
 
-  updateItem: (catIndex, itemIndex, value) => set(state => ({
-    categories: state.categories.map((cat, ci) =>
-      ci !== catIndex ? cat : {
-        ...cat,
-        items: cat.items.map((item, ii) => ii === itemIndex ? value : item)
-      }
-    )
-  })),
+  createGame: async () => {
+    const newGame = createDefaultGame()
+    set({
+      currentGame: newGame,
+      phase: 'setup',
+      magicNumber: null,
+      eliminated: [],
+      done: false,
+    })
+    await adapter.save(newGame)
+  },
 
-  fillCategories: (data) => set({
-    categories: data.map(cat => ({ ...cat, items: [...cat.items] }))
-  }),
+  loadGame: async (id) => {
+    const game = await adapter.get(id)
+    if (game) {
+      set({
+        currentGame: game,
+        phase: game.status === 'completed' ? 'result' : 'setup',
+        done: game.status === 'completed',
+      })
+    }
+  },
+
+  saveGame: async () => {
+    const { currentGame } = get()
+    await adapter.save(currentGame)
+  },
+
+  updateItem: (catIndex, itemIndex, value) => {
+    set(state => {
+      const newCategories = state.currentGame.categories.map((cat, ci) =>
+        ci !== catIndex ? cat : {
+          ...cat,
+          items: cat.items.map((item, ii) => ii === itemIndex ? value : item)
+        }
+      )
+      return {
+        currentGame: {
+          ...state.currentGame,
+          categories: newCategories
+        }
+      }
+    })
+    get().saveGame()
+  },
+
+  fillCategories: (data) => {
+    set(state => ({
+      currentGame: {
+        ...state.currentGame,
+        categories: data.map(cat => ({ ...cat, items: [...cat.items] }))
+      }
+    }))
+    get().saveGame()
+  },
 
   setPhase: (phase) => set({ phase }),
 
   startSpiraling: () => set({ phase: 'spiraling' }),
 
   startElimination: (magicNumber) => {
-    const { categories, animationTimers } = get()
+    const { currentGame, animationTimers } = get()
+    const { categories } = currentGame
     animationTimers.forEach(clearTimeout)
 
     const steps = computeEliminationSteps(categories, magicNumber)
@@ -92,8 +148,8 @@ const useGameStore = create((set, get) => ({
 
         if (i === steps.length - 1) {
             const finalTimer = setTimeout(() => {
-            const allItems = flattenItems(get().categories)
-            const winners = get().categories.map((cat, ci) => {
+            const allItems = flattenItems(get().currentGame.categories)
+            const winners = get().currentGame.categories.map((cat, ci) => {
                 const survivorIndex = cat.items.findIndex((_, ii) => {
                 const flatIdx = allItems.findIndex(
                     item => item.catIndex === ci && item.itemIndex === ii
@@ -102,7 +158,7 @@ const useGameStore = create((set, get) => ({
                 })
                 return { category: cat.name, item: cat.items[survivorIndex] }
             })
-            set({ winners, done: true })
+            get().finishGame(winners)
             }, 800)
             timers.push(finalTimer)
         }
@@ -113,19 +169,25 @@ const useGameStore = create((set, get) => ({
     set({ animationTimers: timers })
     },
 
-  reset: () => {
+  finishGame: async (winners) => {
+    set(state => ({
+      currentGame: {
+        ...state.currentGame,
+        status: 'completed',
+        winners,
+      },
+      done: true,
+    }))
+    await get().saveGame()
+  },
+
+  reset: async () => {
     const { animationTimers } = get()
     animationTimers.forEach(clearTimeout)
-    set({
-      categories: DEFAULT_CATEGORIES,
-      phase: 'setup',
-      magicNumber: null,
-      eliminated: [],
-      winners: [],
-      animationTimers: [],
-      done: false,
-    })
+    set({ animationTimers: [] })
+    await get().createGame()
   },
 }))
 
+const useGameStore = createGameStore()
 export default useGameStore
