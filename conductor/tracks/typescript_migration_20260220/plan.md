@@ -15,14 +15,14 @@
 - [x] Task: Convert Zustand stores to TypeScript. [a1f21dc]
     - [x] `libraryStore.ts`
     - [x] `gameStore.ts`
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Core Logic Migration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Core Logic Migration' (Protocol in workflow.md) [checkpoint: 3895cd0]
 
-## Phase 3: UI Component Migration
+## Phase 3: UI Component Migration [checkpoint: b32e0d5]
 - [x] Task: Convert components to `.tsx`. [2064d78]
     - [x] `SpiralButton.tsx`, `Category.tsx`.
     - [x] `Board.tsx`, `HistoryPanel.tsx`.
     - [x] `App.tsx`, `main.tsx`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: UI Component Migration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: UI Component Migration' (Protocol in workflow.md)
 
 ## Phase 4: Test Suite Migration & Finalization
 - [~] Task: Convert all `.test.js/.jsx` files to `.ts/.tsx`.
