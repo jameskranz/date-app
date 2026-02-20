@@ -3,7 +3,7 @@ import Category from './Category'
 import SpiralButton from './SpiralButton'
 
 export default function Board() {
-  const categories = useGameStore(s => s.categories)
+  const categories = useGameStore(s => s.currentGame.categories)
 const eliminated = useGameStore(s => s.eliminated)
 const phase = useGameStore(s => s.phase)
 const magicNumber = useGameStore(s => s.magicNumber)

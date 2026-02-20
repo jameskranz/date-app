@@ -19,7 +19,7 @@ describe('Board', () => {
 
   beforeEach(() => {
     vi.mocked(useGameStore).mockImplementation((selector) => selector({
-      categories,
+      currentGame: { categories },
       eliminated: [],
       phase: 'setup',
       magicNumber: null,
@@ -41,7 +41,7 @@ describe('Board', () => {
     }))
     
     vi.mocked(useGameStore).mockImplementation((selector) => selector({
-      categories: readyCategories,
+      currentGame: { categories: readyCategories },
       eliminated: [],
       phase: 'setup',
       magicNumber: null,
@@ -57,7 +57,7 @@ describe('Board', () => {
 
   it('should show magic number during elimination', () => {
     vi.mocked(useGameStore).mockImplementation((selector) => selector({
-      categories,
+      currentGame: { categories },
       eliminated: [1],
       phase: 'eliminating',
       magicNumber: 7,
@@ -73,7 +73,7 @@ describe('Board', () => {
 
   it('should show reset button when done', () => {
     vi.mocked(useGameStore).mockImplementation((selector) => selector({
-      categories,
+      currentGame: { categories },
       eliminated: [],
       phase: 'result',
       magicNumber: 7,

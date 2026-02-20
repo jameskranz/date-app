@@ -10,7 +10,7 @@ const gameAdapter = new LocalGameAdapter()
 
 export default function App() {
   const phase = useGameStore(s => s.phase)
-  const categories = useGameStore(s => s.categories)
+  const categories = useGameStore(s => s.currentGame.categories)
   const reset = useGameStore(s => s.reset)
   const fillCategories = useGameStore(s => s.fillCategories)
   const updateItem = useGameStore(s => s.updateItem)
