@@ -16,6 +16,19 @@ function saveAll(games: Game[]): void {
 }
 
 export class LocalGameAdapter {
+  private listeners = new Set<() => void>();
+
+  subscribe(listener: () => void): () => void {
+    this.listeners.add(listener)
+    return () => {
+      this.listeners.delete(listener)
+    }
+  }
+
+  private notify(): void {
+    this.listeners.forEach(l => l())
+  }
+
   async save(game: Game): Promise<Game> {
     const all = loadAll()
     const index = all.findIndex(g => g.id === game.id)
@@ -25,6 +38,7 @@ export class LocalGameAdapter {
       all.push(game)
     }
     saveAll(all)
+    this.notify()
     return game
   }
 

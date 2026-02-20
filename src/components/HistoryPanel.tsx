@@ -1,37 +1,16 @@
-import { useState, useEffect } from 'react'
-import { Game, GameRepository } from '../types'
+import useGameStore from '../stores/gameStore'
 
-interface HistoryPanelProps {
-  adapter: GameRepository;
-}
-
-export default function HistoryPanel({ adapter }: HistoryPanelProps) {
-  const [games, setGames] = useState<Game[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function loadHistory() {
-      try {
-        const history = await adapter.list({ status: 'completed' })
-        // Newest first
-        setGames(history.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadHistory()
-  }, [adapter])
-
-  if (loading) return null
+export default function HistoryPanel() {
+  const games = useGameStore(s => s.history)
 
   return (
     <div className="history-panel">
       <h2 className="history-title">History</h2>
-      {games?.length === 0 ? (
+      {!games || games.length === 0 ? (
         <p className="history-empty">No past games yet</p>
       ) : (
         <div className="history-list">
-          {games?.map(game => {
+          {games.map(game => {
             const date = new Date(game.createdAt)
             const isValidDate = !isNaN(date.getTime())
             const dateString = isValidDate ? date.toLocaleDateString() : 'Unknown Date'
