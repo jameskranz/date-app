@@ -18,7 +18,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Core Logic Migration' (Protocol in workflow.md)
 
 ## Phase 3: UI Component Migration
-- [x] Task: Convert components to `.tsx`. [8ef2a88]
+- [x] Task: Convert components to `.tsx`. [2064d78]
     - [x] `SpiralButton.tsx`, `Category.tsx`.
     - [x] `Board.tsx`, `HistoryPanel.tsx`.
     - [x] `App.tsx`, `main.tsx`.
