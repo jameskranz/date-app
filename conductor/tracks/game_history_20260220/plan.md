@@ -1,10 +1,10 @@
 # Implementation Plan - Implement Game History persistence
 
 ## Phase 1: Storage & Data Layer
-- [ ] Task: Extend `LocalStorageAdapter` to support game history.
-    - [ ] Add `saveHistory(gameData)` method.
-    - [ ] Add `getHistory()` method.
-    - [ ] Add `clearHistory()` method.
+- [x] Task: Create `LocalHistoryAdapter` for game history persistence. [68bc6e7]
+    - [x] Implement `saveHistory(gameData)` method.
+    - [x] Implement `getHistory()` method.
+    - [x] Implement `clearHistory()` method.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Storage & Data Layer' (Protocol in workflow.md)
 
 ## Phase 2: State Management
