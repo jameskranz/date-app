@@ -5,6 +5,12 @@ import Board from './Board'
 // Mock the store
 vi.mock('../stores/gameStore', () => ({
   default: vi.fn(),
+  flattenItems: (categories) => {
+    if (!categories) return []
+    return categories.flatMap((cat, ci) =>
+      cat.items?.map((item, ii) => ({ catIndex: ci, itemIndex: ii, text: item })) || []
+    )
+  }
 }))
 
 import useGameStore from '../stores/gameStore'
