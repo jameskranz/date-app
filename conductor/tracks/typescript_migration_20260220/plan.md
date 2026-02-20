@@ -24,7 +24,7 @@
     - [x] `App.tsx`, `main.tsx`.
 - [x] Task: Conductor - User Manual Verification 'Phase 3: UI Component Migration' (Protocol in workflow.md)
 
-## Phase 4: Test Suite Migration & Finalization
+## Phase 4: Test Suite Migration & Finalization [checkpoint: fb9ae30]
 - [x] Task: Convert all `.test.js/.jsx` files to `.ts/.tsx`. [c0949e3]
 - [x] Task: Run `tsc` to verify zero type errors. [c0949e3]
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Test Suite Migration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Test Suite Migration' (Protocol in workflow.md)
