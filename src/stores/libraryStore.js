@@ -1,12 +1,10 @@
 import { create } from 'zustand'
 import { LocalLibraryAdapter } from '../storage/implementations/LocalLibraryAdapter'
 
-// Swap this import to switch adapter implementations:
-// import { RemoteStorageAdapter } from '../storage/implementations/RemoteStorageAdapter'
-// import { CachedStorageAdapter } from '../storage/implementations/CachedStorageAdapter'
-const adapter = new LocalLibraryAdapter()
+// Default adapter
+const defaultAdapter = new LocalLibraryAdapter()
 
-const useLibraryStore = create((set, get) => ({
+export const createLibraryStore = (adapter = defaultAdapter) => create((set, get) => ({
   // ── State ──────────────────────────────────────────────────────────────
   items: [],          // all library items across all categories
   initialized: false,
@@ -45,4 +43,6 @@ const useLibraryStore = create((set, get) => ({
   },
 }))
 
+// Export the default store instance
+const useLibraryStore = createLibraryStore()
 export default useLibraryStore
