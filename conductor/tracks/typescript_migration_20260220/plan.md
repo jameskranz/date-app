@@ -9,9 +9,9 @@
 
 ## Phase 2: Core Logic Migration (Data & Storage)
 - [x] Task: Create global type definitions (e.g., `src/types/index.ts`).
-- [~] Task: Convert storage adapters to TypeScript.
-    - [ ] `LocalLibraryAdapter.ts`
-    - [ ] `LocalGameAdapter.ts`
+- [x] Task: Convert storage adapters to TypeScript. [6f60596]
+    - [x] `LocalLibraryAdapter.ts`
+    - [x] `LocalGameAdapter.ts`
 - [ ] Task: Convert Zustand stores to TypeScript.
     - [ ] `libraryStore.ts`
     - [ ] `gameStore.ts`
