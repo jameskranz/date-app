@@ -597,3 +597,94 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* History Panel */
+.history-panel {
+  margin-top: 48px;
+  border-top: 2px dashed #d6cfc0;
+  padding-top: 32px;
+}
+
+.history-title {
+  font-family: 'Caveat', cursive;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 16px;
+}
+
+.history-empty {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: #aaa;
+  text-align: center;
+  padding: 24px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-card {
+  background: white;
+  border: 2px solid #e8e0d0;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 2px 4px 0px #d6cfc0;
+  transition: transform 0.2s;
+}
+
+.history-card:hover {
+  transform: translateY(-2px);
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #f5f0e8;
+  padding-bottom: 8px;
+}
+
+.history-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #888;
+}
+
+.history-winners {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.history-winner {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-cat {
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: #c17f5a;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.history-item {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+@media (max-width: 600px) {
+  .history-winners {
+    grid-template-columns: 1fr;
+  }
+}

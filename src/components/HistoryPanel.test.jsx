@@ -36,7 +36,7 @@ describe('HistoryPanel', () => {
     })
 
     expect(screen.getByText('Pizza')).toBeInTheDocument()
-    expect(screen.getByText(/Dinner/i)).toBeInTheDocument()
+    expect(screen.getByText('Dinner')).toBeInTheDocument()
   })
 
   it('should handle games with missing winners property gracefully', async () => {
