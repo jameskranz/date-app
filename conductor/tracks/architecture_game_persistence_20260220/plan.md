@@ -9,17 +9,17 @@
     - [x] **Verification:** TDD with >80% coverage.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Data Layer & Repository' (Protocol in workflow.md)
 
-## Phase 2: Store Refactor
-- [~] Task: Refactor `gameStore` to use `LocalGameAdapter`.
-    - [ ] Inject adapter via factory (like `libraryStore`).
-    - [ ] Replace transient state with `currentGame` object.
-    - [ ] Implement `createGame()` action.
-    - [ ] Implement `finishGame()` action (updates status, persists).
-    - [ ] **Verification:** Update existing store tests to match new structure.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Store Refactor' (Protocol in workflow.md)
+## Phase 2: Store Refactor [checkpoint: 5adf00e]
+- [x] Task: Refactor `gameStore` to use `LocalGameAdapter`. [5c16eaa]
+    - [x] Inject adapter via factory (like `libraryStore`).
+    - [x] Replace transient state with `currentGame` object.
+    - [x] Implement `createGame()` action.
+    - [x] Implement `finishGame()` action (updates status, persists).
+    - [x] **Verification:** Update existing store tests to match new structure.
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Store Refactor' (Protocol in workflow.md)
 
 ## Phase 3: UI Integration (History)
-- [ ] Task: Create `HistoryPanel` using `GameRepository`.
+- [~] Task: Create `HistoryPanel` using `GameRepository`.
     - [ ] Fetch completed games from `gameStore` (or adapter directly).
     - [ ] Render list of past games.
 - [ ] Task: Update `App.jsx` to mount `HistoryPanel`.
