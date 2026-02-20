@@ -68,6 +68,7 @@ export function computeEliminationSteps(categories: Category[], magicNumber: num
 
 export interface GameState {
   currentGame: Game;
+  history: Game[];
   phase: string;
   magicNumber: number | null;
   eliminated: number[];
@@ -78,6 +79,7 @@ export interface GameState {
 export interface GameActions {
   createGame: () => Promise<void>;
   loadGame: (id: string) => Promise<void>;
+  loadHistory: () => Promise<void>;
   saveGame: () => Promise<void>;
   updateItem: (catIndex: number, itemIndex: number, value: string) => void;
   fillCategories: (data: Category[]) => void;
@@ -92,10 +94,11 @@ export type GameStore = GameState & GameActions;
 
 const defaultAdapter = new LocalGameAdapter()
 
-export const createGameStore = (adapter: GameRepository = defaultAdapter) => 
-  create<GameStore>((set, get) => ({
+export const createGameStore = (adapter: GameRepository = defaultAdapter) => {
+  const store = create<GameStore>((set, get) => ({
     // ── State ──────────────────────────────────────────────────────────────
     currentGame: createDefaultGame(),
+    history: [],
     phase: 'setup',
     magicNumber: null,
     eliminated: [],
@@ -125,6 +128,15 @@ export const createGameStore = (adapter: GameRepository = defaultAdapter) =>
           done: game.status === 'completed',
         })
       }
+    },
+
+    loadHistory: async () => {
+      const history = (await adapter.list({ status: 'completed' })) || []
+      set({ 
+        history: [...history].sort((a, b) => 
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        ) 
+      })
     },
 
     saveGame: async () => {
@@ -220,6 +232,17 @@ export const createGameStore = (adapter: GameRepository = defaultAdapter) =>
       await get().createGame()
     },
   }))
+
+  // Initial load and subscription
+  store.getState().loadHistory()
+  if (adapter.subscribe) {
+    adapter.subscribe(async () => {
+      await store.getState().loadHistory()
+    })
+  }
+
+  return store
+}
 
 const useGameStore = createGameStore()
 export default useGameStore

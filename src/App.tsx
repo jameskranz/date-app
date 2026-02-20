@@ -40,7 +40,7 @@ export default function App() {
         />
       )}
 
-      <HistoryPanel adapter={gameAdapter} />
+      <HistoryPanel />
 
       <DevTools onFill={fillCategories} onClear={reset} />
     </div>

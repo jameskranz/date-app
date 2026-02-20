@@ -12,7 +12,8 @@ describe('gameStore persistence', () => {
     adapterMock = {
       save: vi.fn().mockImplementation(g => Promise.resolve(g)),
       get: vi.fn(),
-      list: vi.fn(),
+      list: vi.fn().mockResolvedValue([]),
+      subscribe: vi.fn(),
     }
     useGameStore = createGameStore(adapterMock as unknown as GameRepository)
   })
@@ -59,5 +60,26 @@ describe('gameStore persistence', () => {
     await useGameStore.getState().loadGame('old-game')
 
     expect(useGameStore.getState().currentGame).toEqual(mockGame)
+  })
+
+  it('should reload history when adapter notifies of changes', async () => {
+    let capturedListener: () => Promise<void> = async () => {}
+    adapterMock.subscribe.mockImplementation((l) => {
+      capturedListener = l
+      return vi.fn()
+    })
+    
+    // Recreate store to capture the listener
+    useGameStore = createGameStore(adapterMock as unknown as GameRepository)
+    
+    const mockGames: Game[] = [
+      { id: '1', status: 'completed' as GameStatus, createdAt: '2026-02-20T12:00:00Z', winners: [], participants: [], categories: [] }
+    ]
+    adapterMock.list.mockResolvedValue(mockGames)
+    
+    await capturedListener()
+    
+    expect(useGameStore.getState().history).toHaveLength(1)
+    expect(adapterMock.list).toHaveBeenCalledWith({ status: 'completed' })
   })
 })
