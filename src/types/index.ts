@@ -19,6 +19,12 @@ export interface Game {
   winners: Winner[];
 }
 
+export interface GameRepository {
+  save(game: Game): Promise<Game>;
+  get(id: string): Promise<Game | undefined>;
+  list(filter?: { status?: string }): Promise<Game[]>;
+}
+
 export interface LibraryItem {
   id: string;
   category: string;
